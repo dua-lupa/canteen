@@ -14,4 +14,14 @@ public interface CanteenService {
 
     @Nonnull
     public Collection<Dish> getAllDishes();
+
+    @Nonnull
+    public Collection<Dish> getDishesForCanteen(String canteenId);
+
+    @Nonnull
+    public Collection<Canteen> getAllCanteens();
+
+    @Nonnull
+    public Optional<Canteen> getCanteenById(@Nonnull String canteenId);
+
 }

@@ -1,7 +1,7 @@
 package com.dualupa.canteen.controller;
 
 import com.dualupa.canteen.dao.Dish;
-import com.dualupa.canteen.service.DishService;
+import com.dualupa.canteen.service.CanteenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +18,11 @@ import java.util.Collection;
 public class DishController {
 
     @Autowired
-    private DishService dishService;
+    private CanteenService canteenService;
 
     @GetMapping()
     public ResponseEntity<Object> getAllDishes() {
-        Collection<Dish> allDishes = this.dishService.getAllDishes();
+        Collection<Dish> allDishes = this.canteenService.getAllDishes();
         return ResponseEntity.ok(allDishes);
     }
 }

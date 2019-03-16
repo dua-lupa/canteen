@@ -93,4 +93,31 @@ public class InMemoryCanteenService implements CanteenService {
     public Collection<Dish> getAllDishes() {
         return this.dishes;
     }
+
+    @Nonnull
+    @Override
+    public Collection<Dish> getDishesForCanteen(String canteenId) {
+        return this.getAllDishes().stream()
+                .filter(dish -> dish.isAvailableAtCanteen(canteenId))
+                .collect(Collectors.toList());
+    }
+
+    @Nonnull
+    @Override
+    public Collection<Canteen> getAllCanteens() {
+        return this.dishes.stream()
+                .map(Dish::getAvailableAt)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Canteen::getName, canteen -> canteen,
+                        (canteen1, canteen2) -> canteen1))  // filter distinct elems
+                .values();
+    }
+
+    @Nonnull
+    @Override
+    public Optional<Canteen> getCanteenById(@Nonnull String canteenId) {
+        return this.getAllCanteens().stream()
+                .filter(canteen -> canteen.getId().equalsIgnoreCase(canteenId))
+                .findFirst();
+    }
 }

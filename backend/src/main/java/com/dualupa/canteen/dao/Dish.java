@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
@@ -46,6 +47,11 @@ public class Dish {
         this.categories = categories;
         this.availableAt = availableAt;
         this.id = String.valueOf(Dish.count++);
+    }
+
+    public boolean isAvailableAtCanteen(@Nonnull String canteenId) {
+        return this.availableAt.stream()
+                .anyMatch(canteen -> canteen.getId().equalsIgnoreCase(canteenId));
     }
 
     @JsonProperty("categories")
