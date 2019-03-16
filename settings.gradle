@@ -1,0 +1,4 @@
+rootProject.name = 'canteen'
+
+include "webclient"
+include "backend"

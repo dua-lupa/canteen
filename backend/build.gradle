@@ -1,0 +1,36 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.dualupa'
+version = '0.0.1'
+sourceCompatibility = 8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+
+	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+
+	compile("com.google.code.findbugs:jsr305:3.0.2")
+	compile("org.apache.commons:commons-lang3:3.8.1")
+	compileOnly('org.projectlombok:lombok')
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
