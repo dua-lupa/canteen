@@ -37,7 +37,7 @@ public class InMemoryDishService implements DishService {
         Canteen ulkCanteen = new Canteen("УЛК Главаня", "УЛК, 2 этаж");
 
         Dish soup1 = Dish.builder()
-                .name("Суп гороховый с картофелем и копченостями")
+                .name("Суп гороховый с картофелем и конечностями")
                 .price(BigDecimal.valueOf(50))
                 .weights(Arrays.asList(
                         new Weight(25, GRAM),
