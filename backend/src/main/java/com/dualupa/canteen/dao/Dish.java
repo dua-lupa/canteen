@@ -1,18 +1,19 @@
 package com.dualupa.canteen.dao;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
-import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author avbelyaev
  */
 // TODO add dish picture
-@AllArgsConstructor
+@Builder
 @Data
 public class Dish {
 
@@ -24,14 +25,21 @@ public class Dish {
 
     private List<Weight> weights;
 
-    private Collection<DishCategory> categories;
+    private Collection<Category> categories;
 
     private Collection<Canteen> availableAt;
 
+    @JsonProperty("categories")
+    public Collection<String> categories() {
+        return this.categories.stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+    }
+
     // энергетическая ценность
-    @AllArgsConstructor
+    @Builder
     @Data
-    private static class Nutrition {
+    public static class Nutrition {
 
         private float calories;         // калории
 
@@ -41,21 +49,6 @@ public class Dish {
 
         private float carbohydrates;    // углеводы
     }
-
-    private static class Weight {
-        private float weight;
-
-        private Unit unit;
-
-        private enum Unit {
-            GRAM("gram"),
-            MILLILITER("ml");
-
-            private final String unit;
-
-            Unit(@Nonnull String unit) {
-                this.unit = unit;
-            }
-        }
-    }
 }
+
+
