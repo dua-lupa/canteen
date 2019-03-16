@@ -13,9 +13,12 @@ import java.util.stream.Collectors;
  * @author avbelyaev
  */
 // TODO add dish picture
-@Builder
 @Data
 public class Dish {
+
+    private static long count = 0;
+
+    private String id;
 
     private String name;
 
@@ -28,6 +31,22 @@ public class Dish {
     private Collection<Category> categories;
 
     private Collection<Canteen> availableAt;
+
+    @Builder
+    public Dish(String name,
+                BigDecimal price,
+                Nutrition nutrition,
+                List<Weight> weights,
+                Collection<Category> categories,
+                Collection<Canteen> availableAt) {
+        this.name = name;
+        this.price = price;
+        this.nutrition = nutrition;
+        this.weights = weights;
+        this.categories = categories;
+        this.availableAt = availableAt;
+        this.id = String.valueOf(Dish.count++);
+    }
 
     @JsonProperty("categories")
     public Collection<String> categories() {
