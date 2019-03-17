@@ -1,6 +1,7 @@
 package com.dualupa.canteen.service;
 
 import com.dualupa.canteen.dao.canteen.Canteen;
+import com.dualupa.canteen.dao.canteen.Schedule;
 import com.dualupa.canteen.dao.dish.Category;
 import com.dualupa.canteen.dao.dish.Dish;
 import com.dualupa.canteen.dao.dish.Weight;
@@ -36,9 +37,11 @@ public class InMemoryCanteenService implements CanteenService {
     public void fillInitialCatalogData() {
         log.info("Filling initial catalog");
 
-        Canteen iuCanteen = new Canteen("Столовая ИУ", "ГЗ, 3 этаж");
-        Canteen mainGZCanteen = new Canteen("ГЗ Главная", "ГЗ, слева");
-        Canteen ulkCanteen = new Canteen("УЛК Главаня", "УЛК, 2 этаж");
+        Schedule fullWeek = Schedule.fullWeek();
+
+        Canteen iuCanteen = new Canteen("Столовая ИУ", "ГЗ, 3 этаж", fullWeek);
+        Canteen mainGZCanteen = new Canteen("ГЗ Главная", "ГЗ, слева", fullWeek);
+        Canteen ulkCanteen = new Canteen("УЛК Главаня", "УЛК, 2 этаж", fullWeek);
 
         Dish soup1 = Dish.builder()
                 .name("Суп гороховый с картофелем и конечностями")

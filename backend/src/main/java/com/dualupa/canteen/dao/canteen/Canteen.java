@@ -22,9 +22,10 @@ public class Canteen {
 
     private Schedule schedule;
 
-    public Canteen(String name, String location) {
+    public Canteen(String name, String location, Schedule schedule) {
         this.name = name;
         this.location = location;
+        this.schedule = schedule;
         this.id = String.valueOf(Canteen.count++);
     }
 }

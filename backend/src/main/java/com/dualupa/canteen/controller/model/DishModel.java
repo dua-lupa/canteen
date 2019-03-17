@@ -5,8 +5,6 @@ import com.dualupa.canteen.dao.dish.Dish;
 import com.dualupa.canteen.dao.dish.Dish.Nutrition;
 import com.dualupa.canteen.dao.dish.Weight;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
@@ -50,8 +48,7 @@ public class DishModel {
                 .collect(Collectors.toList());
     }
 
-    @AllArgsConstructor
-    @Data
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     public class WeightModel {
         private final float weight;
 
