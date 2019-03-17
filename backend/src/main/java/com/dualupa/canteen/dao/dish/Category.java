@@ -1,12 +1,12 @@
 package com.dualupa.canteen.dao.dish;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import javax.annotation.Nonnull;
 
 /**
  * @author avbelyaev
  */
+@AllArgsConstructor
 @Getter
 public enum Category {
 
@@ -16,9 +16,5 @@ public enum Category {
     DRINK("напиток");
 
     private String name;
-
-    Category(@Nonnull String name) {
-        this.name = name;
-    }
 
 }

@@ -6,13 +6,20 @@ import com.dualupa.canteen.dao.dish.Category;
 import com.dualupa.canteen.dao.dish.Dish;
 import com.dualupa.canteen.dao.dish.Weight;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.dualupa.canteen.dao.dish.Category.DRINK;
@@ -21,16 +28,54 @@ import static com.dualupa.canteen.dao.dish.Weight.Unit.GRAM;
 import static com.dualupa.canteen.dao.dish.Weight.Unit.MILLILITER;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 /**
  * @author avbelyaev
  */
 @Service
 @Slf4j
-@Profile("standalone")
-public class InMemoryCanteenService implements CanteenService {
+public class MongoCanteenService implements CanteenService {
 
-    private Collection<Dish> dishes = new ArrayList<>();
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @Nonnull
+    @Override
+    public List<Dish> getAllDishesSortedByPrice() {
+        Aggregation aggregationPipeline = Aggregation.newAggregation(
+                sort(Sort.Direction.ASC, "price")
+        );
+        return this.mongoTemplate.aggregate(aggregationPipeline, Dish.class, Dish.class)
+                .getMappedResults();
+    }
+
+    @Nonnull
+    @Override
+    public List<Dish> getDishesForCanteenSortedByPrice(String canteenId) {
+        return this.getAllDishesSortedByPrice().stream()
+                .filter(dish -> dish.isAvailableAtCanteen(canteenId))
+                .collect(Collectors.toList());
+    }
+
+    @Nonnull
+    @Override
+    public Collection<Canteen> getAllCanteens() {
+        return this.getAllDishesSortedByPrice().stream()
+                .map(Dish::getAvailableAt)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Canteen::getName, canteen -> canteen,
+                        (canteen1, canteen2) -> canteen1))  // filter distinct elems
+                .values();
+    }
+
+    @Nonnull
+    @Override
+    public Optional<Canteen> getCanteenById(@Nonnull String canteenId) {
+        return this.getAllCanteens().stream()
+                .filter(canteen -> canteen.getId().equalsIgnoreCase(canteenId))
+                .findFirst();
+    }
 
     @PostConstruct
     public void fillInitialCatalogData() {
@@ -83,46 +128,11 @@ public class InMemoryCanteenService implements CanteenService {
                 .availableAt(asList(iuCanteen, mainGZCanteen))
                 .build();
 
-        this.dishes.add(soup1);
-        this.dishes.add(teaWithSugar);
-        this.dishes.add(makarony);
+        this.mongoTemplate.save(soup1);
+        this.mongoTemplate.save(teaWithSugar);
+        this.mongoTemplate.save(makarony);
 
-        log.info("Catalog has been filled with {} dishes", this.dishes.size());
-    }
-
-    @Nonnull
-    @Override
-    public List<Dish> getAllDishesSortedByPrice() {
-        return this.dishes.stream()
-                .sorted(Comparator.comparing(Dish::getPrice))
-                .collect(Collectors.toList());
-    }
-
-    @Nonnull
-    @Override
-    public List<Dish> getDishesForCanteenSortedByPrice(String canteenId) {
-        return this.getAllDishesSortedByPrice().stream()
-                .filter(dish -> dish.isAvailableAtCanteen(canteenId))
-                .sorted(Comparator.comparing(Dish::getPrice))
-                .collect(Collectors.toList());
-    }
-
-    @Nonnull
-    @Override
-    public Collection<Canteen> getAllCanteens() {
-        return this.dishes.stream()
-                .map(Dish::getAvailableAt)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toMap(Canteen::getName, canteen -> canteen,
-                        (canteen1, canteen2) -> canteen1))  // filter distinct elems
-                .values();
-    }
-
-    @Nonnull
-    @Override
-    public Optional<Canteen> getCanteenById(@Nonnull String canteenId) {
-        return this.getAllCanteens().stream()
-                .filter(canteen -> canteen.getId().equalsIgnoreCase(canteenId))
-                .findFirst();
+        long count = this.mongoTemplate.count(new Query(), Dish.class);
+        log.info("Catalog has been filled with {} dishes", count);
     }
 }

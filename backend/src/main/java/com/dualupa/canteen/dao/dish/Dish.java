@@ -1,8 +1,9 @@
 package com.dualupa.canteen.dao.dish;
 
 import com.dualupa.canteen.dao.canteen.Canteen;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
@@ -13,11 +14,14 @@ import java.util.List;
  * @author avbelyaev
  */
 // TODO add dish picture
-@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
+@Data
+@Document(collection = "Dishes")
 public class Dish {
 
     private static long count = 0;
 
+    @Id
     private String id;
 
     private String name;

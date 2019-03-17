@@ -1,1 +1,6 @@
-spring.jackson.default-property-inclusion: non_null
+spring:
+  jackson.default-property-inclusion: non_null
+  data:
+    mongodb:
+      database: Canteen
+      port: 27017

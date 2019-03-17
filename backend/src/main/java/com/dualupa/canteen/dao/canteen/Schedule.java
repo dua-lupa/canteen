@@ -2,7 +2,8 @@ package com.dualupa.canteen.dao.canteen;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.Nonnull;
 import java.time.DayOfWeek;
@@ -17,7 +18,8 @@ import static java.time.DayOfWeek.*;
 /**
  * @author avbelyaev
  */
-@Getter
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
 public class Schedule {
 
     private List<WorkingHours> workingHours = new ArrayList<>(7);
@@ -41,7 +43,8 @@ public class Schedule {
 
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    @Getter
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
     public static class WorkingHours {
 
         private static final LocalTime OPENING_TIME = LocalTime.of(10, 0);
