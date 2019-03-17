@@ -1,5 +1,6 @@
-package com.dualupa.canteen.dao;
+package com.dualupa.canteen.dao.dish;
 
+import com.dualupa.canteen.dao.canteen.Canteen;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;

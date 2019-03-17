@@ -1,7 +1,7 @@
 package com.dualupa.canteen.service;
 
-import com.dualupa.canteen.dao.Canteen;
-import com.dualupa.canteen.dao.Dish;
+import com.dualupa.canteen.dao.canteen.Canteen;
+import com.dualupa.canteen.dao.dish.Dish;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;

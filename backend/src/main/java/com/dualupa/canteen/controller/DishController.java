@@ -1,6 +1,6 @@
 package com.dualupa.canteen.controller;
 
-import com.dualupa.canteen.dao.Dish;
+import com.dualupa.canteen.dao.dish.Dish;
 import com.dualupa.canteen.service.CanteenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

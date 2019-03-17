@@ -1,9 +1,9 @@
 package com.dualupa.canteen.service;
 
-import com.dualupa.canteen.dao.Canteen;
-import com.dualupa.canteen.dao.Category;
-import com.dualupa.canteen.dao.Dish;
-import com.dualupa.canteen.dao.Weight;
+import com.dualupa.canteen.dao.canteen.Canteen;
+import com.dualupa.canteen.dao.dish.Category;
+import com.dualupa.canteen.dao.dish.Dish;
+import com.dualupa.canteen.dao.dish.Weight;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.dualupa.canteen.dao.Category.DRINK;
-import static com.dualupa.canteen.dao.Category.SOUP;
-import static com.dualupa.canteen.dao.Weight.Unit.GRAM;
-import static com.dualupa.canteen.dao.Weight.Unit.MILLILITER;
+import static com.dualupa.canteen.dao.dish.Category.DRINK;
+import static com.dualupa.canteen.dao.dish.Category.SOUP;
+import static com.dualupa.canteen.dao.dish.Weight.Unit.GRAM;
+import static com.dualupa.canteen.dao.dish.Weight.Unit.MILLILITER;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 

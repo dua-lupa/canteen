@@ -1,4 +1,4 @@
-package com.dualupa.canteen.dao;
+package com.dualupa.canteen.dao.dish;
 
 import lombok.Getter;
 

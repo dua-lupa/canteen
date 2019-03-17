@@ -1,4 +1,4 @@
-package com.dualupa.canteen.dao;
+package com.dualupa.canteen.dao.canteen;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
