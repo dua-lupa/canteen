@@ -24,7 +24,7 @@ public class CanteenModel {
 
     private final List<WorkingHoursModel> schedule;
 
-    private final boolean isOpenNow;
+    private final boolean isOpenNow;        // столовая открыта в данный момент
 
     public CanteenModel(Canteen canteen) {
         this.id = canteen.getId();
@@ -42,17 +42,21 @@ public class CanteenModel {
 
         private final String day;
 
-        private final LocalTime from;
+        private LocalTime from = null;
 
-        private final LocalTime to;
+        private LocalTime to = null;
 
         private final boolean isDayOff;     // выходной
 
         WorkingHoursModel(Schedule.WorkingHours workingHours) {
             this.day = dayOfWeek(workingHours.getDay());
-            this.from = workingHours.getFrom();
-            this.to = workingHours.getTo();
             this.isDayOff = workingHours.isDayOff();
+
+            // для выходного дня расписание не возвращаем
+            if (!this.isDayOff) {
+                this.from = workingHours.getFrom();
+                this.to = workingHours.getTo();
+            }
         }
 
         private static String dayOfWeek(@Nonnull DayOfWeek dayOfWeek) {
