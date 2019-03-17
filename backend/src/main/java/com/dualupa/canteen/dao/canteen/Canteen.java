@@ -1,14 +1,13 @@
 package com.dualupa.canteen.dao.canteen;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @author avbelyaev
  */
 @Data
 @EqualsAndHashCode
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
 @ToString
 public class Canteen {
 
