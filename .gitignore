@@ -34,4 +34,5 @@ pwd.txt
 *.iml
 
 /backend/build/
+mongo-data
 app.jar

@@ -5,3 +5,4 @@
 .idea
 .gradle
 /backend/build
+/mongo-data
