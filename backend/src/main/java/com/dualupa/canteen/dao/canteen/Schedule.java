@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dualupa.canteen.dao.canteen.Schedule.WorkingHours.DayOfWeek.*;
+import static com.dualupa.canteen.dao.canteen.Schedule.WorkingHours.*;
+import static java.time.DayOfWeek.*;
 
 /**
  * @author avbelyaev
@@ -22,15 +24,21 @@ public class Schedule {
 
     public static Schedule fullWeek() {
         Schedule week = new Schedule();
-        week.workingHours.add(WorkingHours.fullDay(MONDAY));
-        week.workingHours.add(WorkingHours.fullDay(TUESDAY));
-        week.workingHours.add(WorkingHours.fullDay(WEDNESDAY));
-        week.workingHours.add(WorkingHours.fullDay(THURSDAY));
-        week.workingHours.add(WorkingHours.partialDay(FRIDAY));
-        week.workingHours.add(WorkingHours.partialDay(SATURDAY));
-        week.workingHours.add(WorkingHours.closed(SUNDAY));
+        week.workingHours.add(fullDay(MONDAY));
+        week.workingHours.add(fullDay(TUESDAY));
+        week.workingHours.add(fullDay(WEDNESDAY));
+        week.workingHours.add(fullDay(THURSDAY));
+        week.workingHours.add(partialDay(FRIDAY));
+        week.workingHours.add(partialDay(SATURDAY));
+        week.workingHours.add(closed(SUNDAY));
         return week;
     }
+
+    public boolean isOpenNow() {
+        return this.workingHours.stream()
+                .anyMatch(WorkingHours::isOpenNow);
+    }
+
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
@@ -42,39 +50,32 @@ public class Schedule {
         @Nonnull
         private DayOfWeek day;
 
-        @Nullable
+        @Nonnull
         private LocalTime from;
 
-        @Nullable
+        @Nonnull
         private LocalTime to;
 
+        private boolean isDayOff;   // выходной
+
         static WorkingHours fullDay(@Nonnull DayOfWeek day) {
-            return new WorkingHours(day, OPENING_TIME, CLOSING_TIME);
+            return new WorkingHours(day, OPENING_TIME, CLOSING_TIME, false);
         }
 
         static WorkingHours partialDay(@Nonnull DayOfWeek day) {
-            return new WorkingHours(day, OPENING_TIME, LocalTime.of(16, 0));
+            return new WorkingHours(day, OPENING_TIME, LocalTime.of(16, 0), false);
         }
 
         static WorkingHours closed(@Nonnull DayOfWeek day) {
-            return new WorkingHours(day, null, null);
+            return new WorkingHours(day, OPENING_TIME, CLOSING_TIME, true);
         }
 
-        @Getter
-        public enum DayOfWeek {
-            MONDAY("пн"),
-            TUESDAY("вт"),
-            WEDNESDAY("ср"),
-            THURSDAY("чт"),
-            FRIDAY("пт"),
-            SATURDAY("сб"),
-            SUNDAY("вс");
-
-            private String name;
-
-            DayOfWeek(@Nonnull String name) {
-                this.name = name;
-            }
+        boolean isOpenNow() {
+            LocalDateTime now = LocalDateTime.now();
+            return !this.isDayOff
+                    && now.getDayOfWeek().equals(day)
+                    && this.from.isBefore(now.toLocalTime())
+                    && this.to.isAfter(now.toLocalTime());
         }
     }
 }

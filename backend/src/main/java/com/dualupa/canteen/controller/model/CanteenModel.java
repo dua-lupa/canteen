@@ -3,8 +3,9 @@ package com.dualupa.canteen.controller.model;
 import com.dualupa.canteen.dao.canteen.Canteen;
 import com.dualupa.canteen.dao.canteen.Schedule;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.annotation.Nonnull;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +24,7 @@ public class CanteenModel {
 
     private final List<WorkingHoursModel> schedule;
 
-    @JsonProperty("isOpen")
-    public boolean isOpen() {
-        return true;
-    }
+    private final boolean isOpenNow;
 
     public CanteenModel(Canteen canteen) {
         this.id = canteen.getId();
@@ -35,21 +33,47 @@ public class CanteenModel {
         this.schedule = canteen.getSchedule().getWorkingHours().stream()
                 .map(WorkingHoursModel::new)
                 .collect(Collectors.toList());
+        this.isOpenNow = canteen.getSchedule().isOpenNow();
     }
+
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     private static class WorkingHoursModel {
 
-        private String day;
+        private final String day;
 
-        private LocalTime from;
+        private final LocalTime from;
 
-        private LocalTime to;
+        private final LocalTime to;
+
+        private final boolean isDayOff;     // выходной
 
         WorkingHoursModel(Schedule.WorkingHours workingHours) {
-            this.day = workingHours.getDay().getName();
+            this.day = dayOfWeek(workingHours.getDay());
             this.from = workingHours.getFrom();
             this.to = workingHours.getTo();
+            this.isDayOff = workingHours.isDayOff();
+        }
+
+        private static String dayOfWeek(@Nonnull DayOfWeek dayOfWeek) {
+            switch (dayOfWeek) {
+                case MONDAY:
+                    return "пн";
+                case TUESDAY:
+                    return "вт";
+                case WEDNESDAY:
+                    return "ср";
+                case THURSDAY:
+                    return "чт";
+                case FRIDAY:
+                    return "пт";
+                case SATURDAY:
+                    return "сб";
+                case SUNDAY:
+                    return "вс";
+                default:
+                    return "wtf";
+            }
         }
     }
 }
