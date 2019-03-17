@@ -31,3 +31,5 @@ hs_err_pid*
 /out/
 pwd.txt
 /jinx/pwd.txt
+
+/backend/build/
