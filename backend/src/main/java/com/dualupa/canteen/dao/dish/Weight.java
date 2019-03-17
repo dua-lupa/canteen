@@ -1,7 +1,6 @@
 package com.dualupa.canteen.dao.dish;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import javax.annotation.Nonnull;
@@ -10,7 +9,7 @@ import javax.annotation.Nonnull;
  * @author avbelyaev
  */
 @AllArgsConstructor
-@Data
+@Getter
 public class Weight {
     private float weight;
 

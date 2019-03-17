@@ -20,7 +20,7 @@ import static java.time.DayOfWeek.*;
 @Getter
 public class Schedule {
 
-    private List<WorkingHours> workingHours = new ArrayList<>();
+    private List<WorkingHours> workingHours = new ArrayList<>(7);
 
     public static Schedule fullWeek() {
         Schedule week = new Schedule();

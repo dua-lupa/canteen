@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,8 +43,8 @@ public class CanteenController {
 
     @GetMapping("/api/canteens/{id}/dishes")
     public ResponseEntity getDishesForCanteen(@PathVariable String id) {
-        Collection<DishModel> canteenDishes = this.canteenService
-                .getDishesForCanteen(id).stream()
+        List<DishModel> canteenDishes = this.canteenService
+                .getDishesForCanteenSortedByPrice(id).stream()
                 .map(DishModel::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(canteenDishes);

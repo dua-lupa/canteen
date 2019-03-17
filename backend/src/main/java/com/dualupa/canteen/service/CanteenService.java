@@ -5,6 +5,7 @@ import com.dualupa.canteen.dao.dish.Dish;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,10 +14,10 @@ import java.util.Optional;
 public interface CanteenService {
 
     @Nonnull
-    public Collection<Dish> getAllDishes();
+    public List<Dish> getAllDishesSortedByPrice();
 
     @Nonnull
-    public Collection<Dish> getDishesForCanteen(String canteenId);
+    public List<Dish> getDishesForCanteenSortedByPrice(String canteenId);
 
     @Nonnull
     public Collection<Canteen> getAllCanteens();

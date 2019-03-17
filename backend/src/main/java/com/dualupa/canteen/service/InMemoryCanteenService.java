@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.dualupa.canteen.dao.dish.Category.DRINK;
@@ -93,15 +90,18 @@ public class InMemoryCanteenService implements CanteenService {
 
     @Nonnull
     @Override
-    public Collection<Dish> getAllDishes() {
-        return this.dishes;
+    public List<Dish> getAllDishesSortedByPrice() {
+        return this.dishes.stream()
+                .sorted(Comparator.comparing(Dish::getPrice))
+                .collect(Collectors.toList());
     }
 
     @Nonnull
     @Override
-    public Collection<Dish> getDishesForCanteen(String canteenId) {
-        return this.getAllDishes().stream()
+    public List<Dish> getDishesForCanteenSortedByPrice(String canteenId) {
+        return this.getAllDishesSortedByPrice().stream()
                 .filter(dish -> dish.isAvailableAtCanteen(canteenId))
+                .sorted(Comparator.comparing(Dish::getPrice))
                 .collect(Collectors.toList());
     }
 

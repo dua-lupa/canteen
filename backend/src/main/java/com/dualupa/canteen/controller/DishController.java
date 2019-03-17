@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +23,7 @@ public class DishController {
 
     @GetMapping()
     public ResponseEntity<Object> getAllDishes() {
-        Collection<DishModel> allDishes = this.canteenService.getAllDishes().stream()
+        List<DishModel> allDishes = this.canteenService.getAllDishesSortedByPrice().stream()
                 .map(DishModel::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(allDishes);

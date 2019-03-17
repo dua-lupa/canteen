@@ -2,7 +2,7 @@ package com.dualupa.canteen.dao.dish;
 
 import com.dualupa.canteen.dao.canteen.Canteen;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author avbelyaev
  */
 // TODO add dish picture
-@Data
+@Getter
 public class Dish {
 
     private static long count = 0;
@@ -55,7 +55,7 @@ public class Dish {
 
     // энергетическая ценность
     @Builder
-    @Data
+    @Getter
     public static class Nutrition {
 
         private float calories;         // калории
