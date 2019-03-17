@@ -1,7 +1,6 @@
 package com.dualupa.canteen.dao.dish;
 
 import com.dualupa.canteen.dao.canteen.Canteen;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +8,6 @@ import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author avbelyaev
@@ -53,13 +51,6 @@ public class Dish {
     public boolean isAvailableAtCanteen(@Nonnull String canteenId) {
         return this.availableAt.stream()
                 .anyMatch(canteen -> canteen.getId().equalsIgnoreCase(canteenId));
-    }
-
-    @JsonProperty("categories")
-    public Collection<String> categories() {
-        return this.categories.stream()
-                .map(Category::getName)
-                .collect(Collectors.toList());
     }
 
     // энергетическая ценность

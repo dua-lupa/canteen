@@ -20,6 +20,8 @@ public class Canteen {
 
     private String location;
 
+    private Schedule schedule;
+
     public Canteen(String name, String location) {
         this.name = name;
         this.location = location;
