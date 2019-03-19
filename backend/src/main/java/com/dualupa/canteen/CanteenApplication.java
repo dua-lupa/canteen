@@ -24,8 +24,6 @@ public class CanteenApplication {
     @Configuration
     protected static class WebConfig implements WebMvcConfigurer {
 
-        // TODO serve SPA from here
-
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             // static data (for SPA bundle)

@@ -7,6 +7,8 @@ FE=${current}/webclient
 
 echo ">>> building frontend"
 echo "skipping"
+# TODO copy bundle into resources/public/static
+# move index.html into templates/index.html
 
 
 echo ">>> building backend"
