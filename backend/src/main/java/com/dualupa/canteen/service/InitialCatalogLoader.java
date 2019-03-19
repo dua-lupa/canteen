@@ -98,7 +98,7 @@ public class InitialCatalogLoader implements CommandLineRunner {
                 .categories(singletonList(Category.PORRIDGE))
                 .nutrition(Dish.Nutrition.builder()
                         .calories(150)
-                        .calories(15)
+                        .carbohydrates(150)
                         .fats(50)
                         .proteins(0)
                         .build())
@@ -106,9 +106,25 @@ public class InitialCatalogLoader implements CommandLineRunner {
                 .imageUrl(CANTEEN_IMAGE_PATH + "soup1.jpg")
                 .build();
 
+        Dish pizza = Dish.builder()
+                .name("Пицца-мини")
+                .price(BigDecimal.valueOf(99))
+                .weights(Collections.singletonList(new Weight(200, GRAM)))
+                .categories(singletonList(Category.PORRIDGE))
+                .nutrition(Dish.Nutrition.builder()
+                        .calories(15)
+                        .carbohydrates(90)
+                        .fats(50)
+                        .proteins(0)
+                        .build())
+                .availableAt(Collections.singletonList(mainGZCanteen))
+                .imageUrl(CANTEEN_IMAGE_PATH + "pizza1.jpg")
+                .build();
+
         this.mongoTemplate.save(soup1);
         this.mongoTemplate.save(teaWithSugar);
         this.mongoTemplate.save(makarony);
+        this.mongoTemplate.save(pizza);
 
         long count = this.mongoTemplate.count(new Query(), Dish.class);
         log.info("Catalog has been filled with {} dishes", count);
