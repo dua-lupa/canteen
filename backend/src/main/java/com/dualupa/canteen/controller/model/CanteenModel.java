@@ -26,6 +26,8 @@ public class CanteenModel {
 
     private final boolean isOpenNow;        // столовая открыта в данный момент
 
+    private final String imageUrl;
+
     public CanteenModel(Canteen canteen) {
         this.id = canteen.getId();
         this.name = canteen.getName();
@@ -34,6 +36,7 @@ public class CanteenModel {
                 .map(WorkingHoursModel::new)
                 .collect(Collectors.toList());
         this.isOpenNow = canteen.getSchedule().isOpenNow();
+        this.imageUrl = canteen.getImageUrl();
     }
 
 

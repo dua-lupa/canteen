@@ -21,10 +21,14 @@ public class Canteen {
 
     private Schedule schedule;
 
-    public Canteen(String name, String location, Schedule schedule) {
+    private String imageUrl;
+
+    @Builder
+    public Canteen(String name, String location, Schedule schedule, String imageUrl) {
         this.name = name;
         this.location = location;
         this.schedule = schedule;
+        this.imageUrl = imageUrl;
         this.id = String.valueOf(Canteen.count++);
     }
 }

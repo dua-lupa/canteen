@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.dualupa.canteen.dao.dish.Dish.PATH_TO_DISH_IMAGES;
+import static com.dualupa.canteen.service.InitialCatalogLoader.CANTEEN_IMAGE_PATH;
 
 /**
  * @author avbelyaev
@@ -28,8 +28,8 @@ public class CanteenApplication {
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/static/**")
                     .addResourceLocations("classpath:public/static/");
-            registry.addResourceHandler(PATH_TO_DISH_IMAGES + "**")
-                    .addResourceLocations("classpath:dish-images/")
+            registry.addResourceHandler(CANTEEN_IMAGE_PATH + "**")
+                    .addResourceLocations("classpath:canteen-images/")
                     .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
         }
 

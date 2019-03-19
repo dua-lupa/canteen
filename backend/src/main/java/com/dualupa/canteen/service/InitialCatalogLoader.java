@@ -29,6 +29,7 @@ import static java.util.Collections.singletonList;
 @Slf4j
 public class InitialCatalogLoader implements CommandLineRunner {
 
+    public static final String CANTEEN_IMAGE_PATH = "/canteen-images/";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -42,9 +43,24 @@ public class InitialCatalogLoader implements CommandLineRunner {
 
         Schedule fullWeek = Schedule.fullWeek();
 
-        Canteen iuCanteen = new Canteen("Столовая ИУ", "ГЗ, 3 этаж", fullWeek);
-        Canteen mainGZCanteen = new Canteen("ГЗ Главная", "ГЗ, слева", fullWeek);
-        Canteen ulkCanteen = new Canteen("УЛК Главаня", "УЛК, 2 этаж", fullWeek);
+        Canteen iuCanteen = Canteen.builder()
+                .name("Столовая ИУ. Элитная")
+                .location("ГЗ, 3 этаж")
+                .schedule(fullWeek)
+                .imageUrl(CANTEEN_IMAGE_PATH + "canteen2.jpg")
+                .build();
+        Canteen mainGZCanteen = Canteen.builder()
+                .name("ГЗ Главная")
+                .location("ГЗ, слева от красного уголка")
+                .schedule(fullWeek)
+                .imageUrl(CANTEEN_IMAGE_PATH + "canteen1.jpg")
+                .build();
+        Canteen ulkCanteen = Canteen.builder()
+                .name("УЛК Главная (для олдов)")
+                .location("УЛК, 2 этаж, там недалеко")
+                .schedule(fullWeek)
+                .imageUrl(CANTEEN_IMAGE_PATH + "canteen3.jpg")
+                .build();
 
         Dish soup1 = Dish.builder()
                 .name("Суп гороховый с картофелем и конечностями")
@@ -60,7 +76,7 @@ public class InitialCatalogLoader implements CommandLineRunner {
                         .proteins(0.5f)
                         .build())
                 .availableAt(asList(iuCanteen, mainGZCanteen, ulkCanteen))
-                .imageUrl("soup1.jpg")
+                .imageUrl(CANTEEN_IMAGE_PATH + "soup1.jpg")
                 .build();
 
         Dish teaWithSugar = Dish.builder()
@@ -72,7 +88,7 @@ public class InitialCatalogLoader implements CommandLineRunner {
                 ))
                 .categories(singletonList(DRINK))
                 .availableAt(asList(iuCanteen, mainGZCanteen, ulkCanteen))
-                .imageUrl("drink1.jpg")
+                .imageUrl(CANTEEN_IMAGE_PATH + "drink1.jpg")
                 .build();
 
         Dish makarony = Dish.builder()
@@ -87,7 +103,7 @@ public class InitialCatalogLoader implements CommandLineRunner {
                         .proteins(0)
                         .build())
                 .availableAt(asList(iuCanteen, mainGZCanteen))
-                .imageUrl("soup1.jpg")
+                .imageUrl(CANTEEN_IMAGE_PATH + "soup1.jpg")
                 .build();
 
         this.mongoTemplate.save(soup1);

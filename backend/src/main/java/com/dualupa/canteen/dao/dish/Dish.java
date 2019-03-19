@@ -13,13 +13,10 @@ import java.util.List;
 /**
  * @author avbelyaev
  */
-// TODO add dish picture
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
 @Data
 @Document(collection = "Dishes")
 public class Dish {
-
-    public static final String PATH_TO_DISH_IMAGES = "/dish-images/";
 
     private static long count = 0;
 
@@ -54,7 +51,7 @@ public class Dish {
         this.weights = weights;
         this.categories = categories;
         this.availableAt = availableAt;
-        this.imageUrl = PATH_TO_DISH_IMAGES + imageUrl;
+        this.imageUrl = imageUrl;
         this.id = String.valueOf(Dish.count++);
     }
 
