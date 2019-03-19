@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # TODO increment image version here
-version=1
+version=2
 LOCAL_IMAGE_NAME=dua-lupa
 REMOTE_IMAGE_NAME=yattbot/dua-lupa:${version}
 DOCKERHUB_LOGIN=yattbot
