@@ -38,10 +38,10 @@
 ## Запуск бекенда
 
 ```bash
+# из корня
 # запустить mongo
 docker-compose up -d
 
-# из корня
 ./gradlew :backend:bootrun
 
 curl http://localhost:8080/api/dishes
@@ -49,6 +49,6 @@ curl http://localhost:8080/api/dishes
 
 ## Сборка
 
-собрать jar: `./build-jar.sh`
+собрать fat-jar с фронтендом: `./build-jar.sh`
 
 запушить образ: `./push-image.sh`
