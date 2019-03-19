@@ -6,3 +6,4 @@
 .gradle
 /backend/build
 /mongo-data
+pwd.txt

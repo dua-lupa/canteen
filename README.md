@@ -1,11 +1,6 @@
 # Canteen
 
 
-вот здесь кмк максимально простой сайтик https://www.mealty.ru/catalog/
-
-тестовые данные от оргов в формате .ods открыать через TextEdit.app - 
-там ебола какая-то, надо попробовать перегнать хотя бы в txt
-
 
 ## API
 
@@ -54,4 +49,6 @@ curl http://localhost:8080/api/dishes
 
 ## Сборка
 
-собрать docker-image: `./build-image.sh`
+собрать jar: `./build-jar.sh`
+
+запушить образ: `./push-image.sh`
