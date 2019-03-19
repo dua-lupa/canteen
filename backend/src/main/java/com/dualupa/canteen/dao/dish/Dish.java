@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author avbelyaev
@@ -40,14 +41,13 @@ public class Dish {
     @Builder
     public Dish(String name,
                 BigDecimal price,
-                Nutrition nutrition,
                 List<Weight> weights,
                 Collection<Category> categories,
                 Collection<Canteen> availableAt,
                 String imageUrl) {
         this.name = name;
         this.price = price;
-        this.nutrition = nutrition;
+        this.nutrition = Nutrition.random();
         this.weights = weights;
         this.categories = categories;
         this.availableAt = availableAt;
@@ -61,7 +61,8 @@ public class Dish {
     }
 
     // энергетическая ценность
-    @Builder
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED) // for mongo
     @Getter
     public static class Nutrition {
 
@@ -72,6 +73,17 @@ public class Dish {
         private float proteins;         // белки
 
         private float carbohydrates;    // углеводы
+
+        public static Nutrition random() {
+            Random random = new Random();
+            int percentage = 100;
+            int fats = random.nextInt(percentage);
+            int proteins = random.nextInt(fats);
+            int carbo = percentage - fats - proteins;
+            int calories = random.nextInt(300);
+
+            return new Nutrition(calories, fats, proteins, carbo);
+        }
     }
 }
 

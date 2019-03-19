@@ -2,7 +2,6 @@ package com.dualupa.canteen.controller.model;
 
 import com.dualupa.canteen.dao.dish.Category;
 import com.dualupa.canteen.dao.dish.Dish;
-import com.dualupa.canteen.dao.dish.Dish.Nutrition;
 import com.dualupa.canteen.dao.dish.Weight;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -24,7 +23,7 @@ public class DishModel {
 
     private final BigDecimal price;
 
-    private final Nutrition nutrition;
+    private final NutritionModel nutrition;
 
     private final List<WeightModel> weights;
 
@@ -38,7 +37,7 @@ public class DishModel {
         this.id = dish.getId();
         this.name = dish.getName();
         this.price = dish.getPrice();
-        this.nutrition = dish.getNutrition();
+        this.nutrition = new NutritionModel(dish.getNutrition());
         this.weights = dish.getWeights().stream()
                 .map(WeightModel::new)
                 .collect(Collectors.toList());
@@ -52,7 +51,7 @@ public class DishModel {
     }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    public class WeightModel {
+    private static class WeightModel {
         private final float weight;
 
         private final String unit;
@@ -60,6 +59,25 @@ public class DishModel {
         WeightModel(Weight weight) {
             this.weight = weight.getWeight();
             this.unit = weight.getUnit().getName();
+        }
+    }
+
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+    private static class NutritionModel {
+
+        private final float calories;         // калории
+
+        private final float fats;             // жиры
+
+        private final float proteins;         // белки
+
+        private final float carbohydrates;    // углеводы
+
+        NutritionModel(Dish.Nutrition nutrition) {
+            this.calories = nutrition.getCalories();
+            this.fats = nutrition.getFats();
+            this.proteins = nutrition.getProteins();
+            this.carbohydrates = nutrition.getCarbohydrates();
         }
     }
 }
