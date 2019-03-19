@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 # TODO increment image version here
-version=2
+version=3
 LOCAL_IMAGE_NAME=dua-lupa
 REMOTE_IMAGE_NAME=yattbot/dua-lupa:${version}
 DOCKERHUB_LOGIN=yattbot
 
 
+echo ">>> Make sure you have rebuilt jar!"
 echo ">>> building docker image"
 docker build -t ${LOCAL_IMAGE_NAME} .
 
