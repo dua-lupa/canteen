@@ -3,4 +3,14 @@ spring:
   data:
     mongodb:
       database: Canteen
+      host: localhost
       port: 27017
+
+---
+
+spring.profiles: prod
+
+spring:
+  data:
+    mongodb:
+      host: mongodb

@@ -24,13 +24,18 @@ public class CanteenApplication {
     @Configuration
     protected static class WebConfig implements WebMvcConfigurer {
 
+        // TODO serve SPA from here
+
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            // static data (for SPA bundle)
             registry.addResourceHandler("/static/**")
-                    .addResourceLocations("classpath:public/static/");
-            registry.addResourceHandler(CANTEEN_IMAGE_PATH + "**")
-                    .addResourceLocations("classpath:canteen-images/")
+                    .addResourceLocations("classpath:public/static/")
                     .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+            // non-static images
+            registry.addResourceHandler(CANTEEN_IMAGE_PATH + "**")
+                    .addResourceLocations("classpath:" + CANTEEN_IMAGE_PATH)
+                    .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
         }
 
     }

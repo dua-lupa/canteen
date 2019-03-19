@@ -7,3 +7,12 @@ services:
     - "27017:27017"
     volumes:
     - './mongo-data:/data/db'
+
+#  service:
+#    image: dua-lupa:latest
+#    environment:
+#      SPRING_PROFILES_ACTIVE: prod
+#    ports:
+#    - 8080:8080
+#    depends_on:
+#    - mongodb
