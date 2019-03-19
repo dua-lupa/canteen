@@ -19,6 +19,8 @@ import java.util.List;
 @Document(collection = "Dishes")
 public class Dish {
 
+    public static final String PATH_TO_DISH_IMAGES = "/dish-images/";
+
     private static long count = 0;
 
     @Id
@@ -36,19 +38,23 @@ public class Dish {
 
     private Collection<Canteen> availableAt;
 
+    private String imageUrl;
+
     @Builder
     public Dish(String name,
                 BigDecimal price,
                 Nutrition nutrition,
                 List<Weight> weights,
                 Collection<Category> categories,
-                Collection<Canteen> availableAt) {
+                Collection<Canteen> availableAt,
+                String imageUrl) {
         this.name = name;
         this.price = price;
         this.nutrition = nutrition;
         this.weights = weights;
         this.categories = categories;
         this.availableAt = availableAt;
+        this.imageUrl = PATH_TO_DISH_IMAGES + imageUrl;
         this.id = String.valueOf(Dish.count++);
     }
 

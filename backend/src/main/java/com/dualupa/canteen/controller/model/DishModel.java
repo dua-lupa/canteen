@@ -32,6 +32,8 @@ public class DishModel {
 
     private final Collection<CanteenModel> availableAt;
 
+    private final String imageUrl;
+
     public DishModel(@Nonnull Dish dish) {
         this.id = dish.getId();
         this.name = dish.getName();
@@ -46,6 +48,7 @@ public class DishModel {
         this.availableAt = dish.getAvailableAt().stream()
                 .map(CanteenModel::new)
                 .collect(Collectors.toList());
+        this.imageUrl = dish.getImageUrl();
     }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
